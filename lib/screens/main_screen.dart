@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:mealcipe_app/model/meals.dart';
 import 'package:mealcipe_app/screens/category_screen.dart';
+import 'package:mealcipe_app/screens/filter_screen.dart';
 import 'package:mealcipe_app/screens/meals_screen.dart';
 import 'package:mealcipe_app/widgets/drawer.dart';
 
@@ -37,9 +38,11 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   void _selectedListTile(String identifier) {
+    Navigator.of(context).pop();
     if (identifier == "filter") {
-    } else {
-      Navigator.of(context).pop();
+      Navigator.of(
+        context,
+      ).push(MaterialPageRoute(builder: ((cntxt) => FilterScreen())));
     }
   }
 
