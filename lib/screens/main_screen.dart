@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:mealcipe_app/model/meals.dart';
 import 'package:mealcipe_app/screens/category_screen.dart';
 import 'package:mealcipe_app/screens/meals_screen.dart';
+import 'package:mealcipe_app/widgets/drawer.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -35,6 +36,13 @@ class _MainScreenState extends State<MainScreen> {
     }
   }
 
+  void _selectedListTile(String identifier) {
+    if (identifier == "filter") {
+    } else {
+      Navigator.of(context).pop();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     Widget activeScreen = CategoryPage(onAddFavorite: _addFavorite);
@@ -57,6 +65,7 @@ class _MainScreenState extends State<MainScreen> {
           ).textTheme.headlineMedium!.copyWith(fontWeight: FontWeight.bold),
         ),
       ),
+      drawer: CustomDrawer(onSelectListTile: _selectedListTile),
       body: activeScreen,
       bottomNavigationBar: BottomNavigationBar(
         onTap: _selectedScreen,
