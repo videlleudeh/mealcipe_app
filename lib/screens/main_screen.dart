@@ -37,12 +37,13 @@ class _MainScreenState extends State<MainScreen> {
     }
   }
 
-  void _selectedListTile(String identifier) {
+  void _selectedListTile(String identifier) async {
     Navigator.of(context).pop();
     if (identifier == "filter") {
-      Navigator.of(
-        context,
-      ).push(MaterialPageRoute(builder: ((cntxt) => FilterScreen())));
+      final result = await Navigator.of(context).push<Map<Filter, bool>>(
+        MaterialPageRoute(builder: ((cntxt) => FilterScreen())),
+      );
+      print(result);
     }
   }
 
