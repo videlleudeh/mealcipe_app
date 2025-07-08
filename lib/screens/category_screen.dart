@@ -6,12 +6,17 @@ import 'package:mealcipe_app/screens/meals_screen.dart';
 import 'package:mealcipe_app/widgets/category_item.dart';
 
 class CategoryPage extends StatelessWidget {
-  const CategoryPage({super.key, required this.onAddFavorite});
+  const CategoryPage({
+    super.key,
+    required this.onAddFavorite,
+    required this.availableMeals,
+  });
 
   final void Function(Meal meal) onAddFavorite;
+  final List<Meal> availableMeals;
 
   void _selectedCategory(BuildContext context, Category category) {
-    final categoryList = mealsData
+    final categoryList = availableMeals
         .where((meals) => meals.categories.contains(category.id))
         .toList();
 

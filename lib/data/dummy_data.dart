@@ -154,11 +154,7 @@ const mealsData = [
   ),
   Meal(
     id: 'm5',
-    categories: [
-      'c2'
-          'c5',
-      'c10',
-    ],
+    categories: ['c2', 'c5', 'c10'],
     title: 'Salad with Smoked Salmon',
     affordability: Affordability.luxurious,
     complexity: Complexity.simple,
@@ -291,8 +287,8 @@ const mealsData = [
         'https://cdn.pixabay.com/photo/2014/08/07/21/07/souffle-412785_1280.jpg',
     duration: 45,
     ingredients: [
-      '1 Teaspoon melted Butter',
-      '2 Tablespoons white Sugar',
+      '1 Teaspoon melted Butter'
+          '2 Tablespoons white Sugar',
       '2 Ounces 70% dark Chocolate, broken into pieces',
       '1 Tablespoon Butter',
       '1 Tablespoon all-purpose Flour',
