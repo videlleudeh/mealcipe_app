@@ -5,24 +5,15 @@ import 'package:mealcipe_app/screens/meal_detail_sceen.dart';
 import 'package:mealcipe_app/widgets/meal_item.dart';
 
 class MealsPage extends StatelessWidget {
-  const MealsPage({
-    super.key,
-    this.title,
-    required this.meals,
-    required this.onAddFavorite,
-  });
+  const MealsPage({super.key, this.title, required this.meals});
 
   final String? title;
   final List<Meal> meals;
-  final void Function(Meal meal) onAddFavorite;
 
   void _onSelectMeal(BuildContext context, Meal meal) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (cntxt) =>
-            MealDetail(meal: meal, onAddFavorite: onAddFavorite),
-      ),
-    );
+    Navigator.of(
+      context,
+    ).push(MaterialPageRoute(builder: (cntxt) => MealDetail(meal: meal)));
   }
 
   @override

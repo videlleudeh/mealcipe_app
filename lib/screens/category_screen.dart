@@ -6,13 +6,8 @@ import 'package:mealcipe_app/screens/meals_screen.dart';
 import 'package:mealcipe_app/widgets/category_item.dart';
 
 class CategoryPage extends StatelessWidget {
-  const CategoryPage({
-    super.key,
-    required this.onAddFavorite,
-    required this.availableMeals,
-  });
+  const CategoryPage({super.key, required this.availableMeals});
 
-  final void Function(Meal meal) onAddFavorite;
   final List<Meal> availableMeals;
 
   void _selectedCategory(BuildContext context, Category category) {
@@ -23,11 +18,8 @@ class CategoryPage extends StatelessWidget {
     // Another method- Navigator.push(context, MaterialPageRoute(builder: (cntxt) => MealsPage(title: "Food Cantent", meals: []),),);
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (cntxt) => MealsPage(
-          title: category.title,
-          meals: categoryList,
-          onAddFavorite: onAddFavorite,
-        ),
+        builder: (cntxt) =>
+            MealsPage(title: category.title, meals: categoryList),
       ),
     );
   }
