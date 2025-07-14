@@ -11,6 +11,9 @@ class MealDetail extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final favoriteMeal = ref.watch(favoriteProvider);
+    final isFavorite = favoriteMeal.contains(meal);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -36,7 +39,11 @@ class MealDetail extends ConsumerWidget {
                 ),
               );
             },
-            icon: Icon(Icons.star_border),
+            icon: Icon(
+              isFavorite ? Icons.star : Icons.star_border,
+              color: Theme.of(context).colorScheme.primary,
+              size: 30,
+            ),
           ),
         ],
       ),
@@ -67,8 +74,8 @@ class MealDetail extends ConsumerWidget {
               ),
               const SizedBox(height: 8),
               ...meal.ingredients.map(
-                (meals) => Text(
-                  "- $meals",
+                (ingredients) => Text(
+                  "- $ingredients",
                   textAlign: TextAlign.start,
                   style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                     color: Theme.of(context).colorScheme.onPrimary,
@@ -90,8 +97,8 @@ class MealDetail extends ConsumerWidget {
               ),
               const SizedBox(height: 8),
               ...meal.steps.map(
-                (meals) => Text(
-                  "- $meals",
+                (steps) => Text(
+                  "- $steps",
                   style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                     color: Theme.of(context).colorScheme.onPrimary,
                     fontWeight: FontWeight.bold,

@@ -1,32 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-enum Filter { glutenFree, lactoseFree, vegetarian, vegan }
+import 'package:mealcipe_app/providers/filters_provider.dart';
 
-class FilterScreen extends StatefulWidget {
-  const FilterScreen({super.key, required this.setFilter});
-
-  final Map<Filter, bool> setFilter;
-  @override
-  State<FilterScreen> createState() => _FilterScreenState();
-}
-
-class _FilterScreenState extends State<FilterScreen> {
-  var _glutenFreeFilter = false;
-  var _lactoseFreeFilter = false;
-  var _vegetarianFilter = false;
-  var _veganFilter = false;
+class FilterScreen extends ConsumerWidget {
+  const FilterScreen({super.key});
 
   @override
-  void initState() {
-    super.initState();
-    _glutenFreeFilter = widget.setFilter[Filter.glutenFree]!;
-    _lactoseFreeFilter = widget.setFilter[Filter.lactoseFree]!;
-    _vegetarianFilter = widget.setFilter[Filter.vegetarian]!;
-    _veganFilter = widget.setFilter[Filter.vegan]!;
-  }
+  Widget build(BuildContext context, WidgetRef ref) {
+    final activeFilter = ref.watch(filterProvider);
 
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -36,90 +19,74 @@ class _FilterScreenState extends State<FilterScreen> {
           ).textTheme.titleLarge!.copyWith(fontWeight: FontWeight.bold),
         ),
       ),
-      body: PopScope(
-        canPop: false,
-        onPopInvokedWithResult: (didPop, result) {
-          if (didPop) return;
-
-          Navigator.of(context).pop({
-            Filter.glutenFree: _glutenFreeFilter,
-            Filter.lactoseFree: _lactoseFreeFilter,
-            Filter.vegetarian: _vegetarianFilter,
-            Filter.vegan: _veganFilter,
-          });
-        },
-        child: Column(
-          children: [
-            SwitchListTile(
-              value: _glutenFreeFilter,
-              onChanged: (isExisting) {
-                setState(() {
-                  _glutenFreeFilter = isExisting;
-                });
-              },
-              title: Text(
-                "Gluten-free",
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-              subtitle: Text(
-                "Your gluten-free food",
-                style: Theme.of(context).textTheme.labelLarge,
-              ),
-              activeColor: Theme.of(context).colorScheme.tertiary,
+      body: Column(
+        children: [
+          SwitchListTile(
+            value: activeFilter[Filter.glutenFree]!,
+            onChanged: (isFiltered) {
+              ref
+                  .read(filterProvider.notifier)
+                  .setFilter(Filter.glutenFree, isFiltered);
+            },
+            title: Text(
+              "Gluten-free",
+              style: Theme.of(context).textTheme.titleLarge,
             ),
-            SwitchListTile(
-              value: _lactoseFreeFilter,
-              onChanged: (isExisting) {
-                setState(() {
-                  _lactoseFreeFilter = isExisting;
-                });
-              },
-              title: Text(
-                "Lactose-free",
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-              subtitle: Text(
-                "Your lactose-free food",
-                style: Theme.of(context).textTheme.labelLarge,
-              ),
-              activeColor: Theme.of(context).colorScheme.tertiary,
+            subtitle: Text(
+              "Your gluten-free food",
+              style: Theme.of(context).textTheme.labelLarge,
             ),
-            SwitchListTile(
-              value: _vegetarianFilter,
-              onChanged: (isExisting) {
-                setState(() {
-                  _vegetarianFilter = isExisting;
-                });
-              },
-              title: Text(
-                "Vegeterian",
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-              subtitle: Text(
-                "Your vegetarian food",
-                style: Theme.of(context).textTheme.labelLarge,
-              ),
-              activeColor: Theme.of(context).colorScheme.tertiary,
+            activeColor: Theme.of(context).colorScheme.tertiary,
+          ),
+          SwitchListTile(
+            value: activeFilter[Filter.lactoseFree]!,
+            onChanged: (isFiltered) {
+              ref
+                  .read(filterProvider.notifier)
+                  .setFilter(Filter.lactoseFree, isFiltered);
+            },
+            title: Text(
+              "Lactose-free",
+              style: Theme.of(context).textTheme.titleLarge,
             ),
-            SwitchListTile(
-              value: _veganFilter,
-              onChanged: (isExisting) {
-                setState(() {
-                  _veganFilter = isExisting;
-                });
-              },
-              title: Text(
-                "Vegan",
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-              subtitle: Text(
-                "Your vegan food",
-                style: Theme.of(context).textTheme.labelLarge,
-              ),
-              activeColor: Theme.of(context).colorScheme.tertiary,
+            subtitle: Text(
+              "Your lactose-free food",
+              style: Theme.of(context).textTheme.labelLarge,
             ),
-          ],
-        ),
+            activeColor: Theme.of(context).colorScheme.tertiary,
+          ),
+          SwitchListTile(
+            value: activeFilter[Filter.vegetarian]!,
+            onChanged: (isFiltered) {
+              ref
+                  .read(filterProvider.notifier)
+                  .setFilter(Filter.vegetarian, isFiltered);
+            },
+            title: Text(
+              "Vegeterian",
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
+            subtitle: Text(
+              "Your vegetarian food",
+              style: Theme.of(context).textTheme.labelLarge,
+            ),
+            activeColor: Theme.of(context).colorScheme.tertiary,
+          ),
+          SwitchListTile(
+            value: activeFilter[Filter.vegan]!,
+            onChanged: (isFiltered) {
+              ref
+                  .read(filterProvider.notifier)
+                  .setFilter(Filter.vegan, isFiltered);
+            },
+            title: Text("Vegan", style: Theme.of(context).textTheme.titleLarge),
+            subtitle: Text(
+              "Your vegan food",
+              style: Theme.of(context).textTheme.labelLarge,
+            ),
+            activeColor: Theme.of(context).colorScheme.tertiary,
+          ),
+        ],
       ),
     );
   }
